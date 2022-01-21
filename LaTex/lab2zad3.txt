@@ -1,0 +1,13 @@
+[1] "P(X>144)"
+[1] 0.4728497
+[1] "Kwartyle"
+[1] 123.2383 142.0050 162.5891
+[1] "Procent myszek traci zdatność w 2 lata"
+[1] 8.072202
+[1] "Najprawdopodobna ze 100 myszek w 2 lata"
+[1] 9
+[1] "P(X>144|X>52)"
+[1] 0.4728561
+[1] "Oczekiwana pod warunkiem że X>52"
+[1] "X - 52"
+[1] 92

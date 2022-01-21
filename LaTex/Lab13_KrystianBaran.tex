@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,pdfpages,enumitem,empheq,verbatim,csvsimple}
+\usepackage{multirow}
+
+\author{Krystian Baran 145000}
+\title{Zadania z Lab 13}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% Zadanie 1
+\section{Zadanie 1}
+(Krysicki 5.2). Zmierzono długości czasów świecenia trzech typów żarówek, otrzymując (w h):
+\begin{enumerate}[label = dla typu \arabic*:]
+\item 1802, 1992, 1854, 1880, 1761, 1900;
+\item 1664, 1755, 1823, 1862;
+\item 1877, 1710, 1882, 1720, 1950.
+\end{enumerate}
+Na poziomie istotności $\alpha=0,05$ zweryfikować hipotezę, że wartości przeciętne czasów świecenia żarówek tych typów są jednakowe. \\ \par
+
+Dane przygotowano w postaci pliku csv w celu obliczenia testu ANOVA w R.
+\begin{center}
+\csvreader[tabular = |c|c|,
+table head = \hline \bfseries{data} & \bfseries{type} \\ \hline,
+late after last line = \\ \hline]{w12zad1.csv}{}{\csvlinetotablerow}
+\end{center}
+
+Dane te wgrano w R w następujący sposób: \textit{data = read.csv("w12zad1.csv", colClasses = c("numeric", "factor")}. \\
+Obliczenie testu ANOVA w R przeprowadzono w następujący sposób: \\
+\textit{model = aov(data$\sim$type, data)} \\
+\textit{summary(model)} \\
+Otrzymano następujący tablicowy wynik:
+
+\begin{center} \begin{tabular}{|c|c|c|c|c|c|} \hline
+& Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ \hline
+type & 2 & 18947 & 9473 & 1.127 & 0.356 \\ \hline
+Residuals & 12 & 100864 & 8405 & & \\ \hline
+\end{tabular} \end{center}
+
+Funkcja oblicza \textit{p-value} zapisane w ostatniej kolumnie, które jest większe od przyjętego poziomu istotności $\alpha=0.05$. Zatem nie mamy podstaw aby odrzucić hipotezę zerowa o równaniu się wartości przeciętnych czasów świecenia żarówek.
+
+\newpage
+% Zadanie 2
+\section{Zadane 2}
+(Krysicki 5.3). Spośród trzech odmian ziemniaków każdą uprawiano na 12 działkach tej samej wielkości i rodzaju. Działki te podzielono na 4 grupy po 3 działki i dla każdej grupy zastosowano różny rodzaj nawozu. Plony w $q$ zestawione w tabeli:
+\begin{center} \begin{tabular}{|c|ccc|ccc|ccc|ccc|} \hline
+Odmiana & \multicolumn{12}{|c|}{Nawóz} \\ \cline{2-13}
+& \multicolumn{3}{|c|}{1} & \multicolumn{3}{|c|}{2} & \multicolumn{3}{|c|}{3} & \multicolumn{3}{|c|}{4} \\ \hline
+1 & 5,6 & 6,1 & 5,9 & 6,6 & 6,7 & 6,6 & 7,7 & 7,3 & 7,4 & 6,3 & 6,4 & 6,3 \\ 
+2 & 5,7 & 4,9 & 5,1 & 6,5 & 6,7 & 6,6 & 6,9 & 7,1 & 6,5 & 6,6 & 6,7 & 6,7 \\ 
+3 & 6,3 & 6,1 & 6,3 & 6,5 & 6,4 & 6,2 & 6,6 & 6,6 & 6,8 & 6,3 & 6,1 & 6,0 \\ \hline
+\end{tabular} \end{center}
+
+Na poziomie istotności $\alpha=0,05$ zweryfikować następujące hipotezy:
+\begin{enumerate}[label = \alph*)]
+\item wartości przeciętne plonów dla różnych odmian nie różnią się istotnie niezależnie od stosowanego nawozu,
+\item wartości przeciętne plonów dla różnych nawozów nie różnią się istotnie niezależnie od odmiany,
+\item interakcja między odmianami i nawozami jest równa 0.
+\end{enumerate}
+
+Dane przygotowano w postaci pliku csv w celu obliczenia testu ANOVA w R.
+\begin{center}
+\scriptsize
+\csvreader[tabular = |c|c|c|,
+table head = \hline \bfseries{data} & \bfseries{odmiana} & \bfseries{nawoz} \\ \hline,
+late after last line = \\ \hline]{w12zad2.csv}{}{\csvlinetotablerow}
+\end{center}
+
+\subsection{a)}
+Dane te wgrano w R w następujący sposób: \textit{data = read.csv("w12zad2.csv", colClasses = c("numeric", "factor", "factor")}. \\
+Obliczenie testu ANOVA w R przeprowadzono w następujący sposób: \\
+\textit{model = aov(data$\sim$odmiana + nawoz, data)} \\
+\textit{summary(model)} \\
+Otrzymano następujący tablicowy wynik:
+
+\begin{center} \begin{tabular}{|c|c|c|c|c|c|} \hline
+& Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ \hline
+odmiana & 2 & 4.101 & 2.0503 & 16.900 & 1.21e-05 \\ \hline
+nawoz & 3 & 3.116 & 1.0388 & 8.563 & 0.000294 \\ \hline
+Residuals & 30 & 3.639 & 0.1213 & & \\ \hline
+\end{tabular} \end{center}
+
+Funkcja oblicza \textit{p-value} w ostatniej kolumnie. Dla typu nawozu widzimy że wartość 0.000294 jest mniejsza od przyjętego poziomu istotności $\alpha = 0.05$, zatem wartości przeciętne plonów różnią się istotnie zależnie od stosowanego nawozu.
+
+\subsection{b)}
+Korzystając z tabeli poprzedniego podpunktu widzimy że \textit{p-value =  1.12e-05} dla typu odmiany jest mniejsze od przyjętego poziomu istotności $\alpha = 0.05$. Zatem wartości przeciętne plonów dla rożnych nawozów różnią się istotnie zależnie od odmiany.
+
+\subsection{c)}
+Aby sprawdzić interakcje między nawozami i odmianami możemy zastosować test Tukeya w R następująco: \textit{TukeyHSD(model, conf.level = 0.95)}. Funkcja ta oddaje następujące tablice:
+
+\begin{center} \begin{tabular}{|c|c|c|c|c|} \hline
+\multicolumn{5}{|c|}{\$odmiana} \\ \hline
+& diff & lwr & upr & p adj \\ \hline
+2-1 & 0.8250000 & 0.4744532 & 1.17554680 & 0.0000071 \\ \hline
+3-1 & 0.4583333 & 0.1077865 & 0.80888014 & 0.0083242 \\ \hline
+3-2 & -0.3666667 & -0.7172135 & -0.01611986 & 0.0388934 \\ \hline
+\multicolumn{5}{|c|}{\$nawoz} \\ \hline
+2-1 & -0.4000000 & -0.84645464 & 0.04645464 & 0.0917316 \\ \hline
+3-1 & 0.4111111 & -0.03534353 & 0.85756575 & 0.0796887 \\ \hline
+4-1 & 0.1555556 & -0.29089908 & 0.60201019 & 0.7797038 \\ \hline
+3-2 & 0.8111111 & 0.36465647 & 1.25756575 & 0.0001551 \\ \hline
+4-2 & 0.5555556 & 0.10910092 & 1.00201019 & 0.0102547 \\ \hline
+4-3 & -0.2555556 & -0.70201019 & 0.19089908 & 0.4179349 \\ \hline
+\end{tabular} \end{center}
+
+Obliczone są \textit{p-value} zatem możemy dokonać wnioski. Dla różnicy odmian widzimy że wszystkie \textit{p-value} są mniejsze od $\alpha = 0.05$, zatem każda wartość przeciętna dla odmian różni się, więc różnice nie są równe 0. \\
+Dla nawozów natomiast istnieją wartości \textit{p-value} większe od $\alpha = 0.05$ są to różnice: 1-3, 1-4, 3-4. Oznacza to że dla tych nawozów różnica wartości przeciętnych jest z dużym prawdopodobieństwem 0. Natomiast dla reszty nawozów różnice nie są równe 0 bo przeciętne wartości różnią się za dużo.
+
+\end{document}

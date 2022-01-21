@@ -1,0 +1,6 @@
+null device 
+          1 
+mean  2.751196  variance  0.8295317 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.4313  1.9869  2.8530  2.7512  3.6009  3.9488 
+[1] 0.8295317

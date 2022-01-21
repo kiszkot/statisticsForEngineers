@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,enumitem,empheq,verbatim}
+
+\author{Krystian Baran 145000}
+\title{Laboratoria 6 Zadanie 4 na wykład}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\section{Zadanie 4}
+Celem sprawdzenia dokładności wskazań pewnego przyrządu pomiarowego dokonano 10
+pomiarów tej samej wielkości fizycznej $X$ i otrzymano następujące wyniki: \\
+\begin{center}
+9,01; 9,00; 9,02; 8,99; 8,98; 9,00; 9,00; 9,01; 8,99; 9,00.
+\end{center}
+Dokonać przekształcenia pomiarów według wzoru:
+\[ Y = 100(X - 9) \]
+Dla wielkości $X$ i $Y$ oszacować ich wartości oczekiwane i wariancje. \\ \par
+
+Na początku sporządzimy tabele wartości $X$ i $Y$ korzystając z podanego wzoru.
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Lp. & X & Y \\ \hline
+1 & 9.01	& 1 \\ \hline
+2& 9 &	0 \\ \hline
+3 &9.02	& 2 \\ \hline
+4 & 8.99	& -1\\ \hline
+5 & 8.98	& -2\\ \hline
+6 & 9	 &0\\ \hline
+7 & 9	&0\\ \hline
+8 & 9.01	&1\\ \hline
+9 & 8.99	&-1\\ \hline
+10 & 9	&0\\ \hline
+\end{tabular}
+\end{center}
+Oszacujemy wartość oczekiwaną jako średnia z podanych wartości, czyli:
+\[ \mathbb{E}X = \overline{X} = \frac{\sum x_i}{n} = \frac{90}{10} = 9 \]
+\[ \mathbb{E}Y = \overline{Y} = \frac{\sum y_i}{n} = \frac{9}{10} = 0 \]
+
+Aby obliczyć odchylenie standardowe potrzebujemy sumę kwadratów obniżonych o średnią.
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Lp. & $(x_i - \overline{X})^2$ & $(y_i - \overline{Y})^2$ \\ \hline
+1 & 0.0001	 & 1 \\ \hline
+2 & 0.0000	 & 0 \\ \hline
+3 & 0.0004	 & 4 \\ \hline
+4 & 0.0001	 & 1 \\ \hline
+5 & 0.0004	 & 4 \\ \hline
+6 & 0.0000	 & 0 \\ \hline
+7 & 0.0000	 & 0 \\ \hline
+8 & 0.0001	 & 1 \\ \hline
+9 & 0.0001	 & 1 \\ \hline
+10 & 0.0000 & 0 \\ \hline
+SUM & 0.0012 & 12 \\ \hline
+\end{tabular}
+\end{center}
+
+Wtedy można łatwo obliczyć wartość odchylenia standardowego:
+\[ \sigma_x = \sqrt{\frac{\sum (x_i - \overline{X})^2}{n}} = \sqrt{\frac{0.0012}{10}} \approx 0.010954451 \]
+\[ \sigma_y = \sqrt{\frac{\sum (y_i - \overline{Y})^2}{n}} = \sqrt{\frac{12}{10}} \approx 1.095445115 \]
+
+Wartość oczekiwana zmiennej $X$ wynosi 9, gdzie $X$ jest mierzona długość, więc możemy przyjąć że jest to długość mierzonego obiektu.\\
+Wartość oczekiwana zmiennej $Y$, która wskazuje nam błąd procentowy względem wartości rzeczywistej 9, wynosi 0; zatem obiekt zmierzony został poprawnie. \\ \par
+Odchylenie standardowe zmiennej $X$ wynosi w przybliżeniu 0.01, oznacza to że rzeczywistsza długość obiektu, z uwzględnieniem błędu pomiarowego wynosi $9.00 \pm0.01$.\\
+ Odchylenie standardowe zmiennej $Y$ wynosi w przybliżeniu 1, zatem rzeczywista wartość procentowego błędu jest $\pm1\%$.
+
+
+\end{document}

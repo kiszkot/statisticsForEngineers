@@ -1,0 +1,347 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,pdfpages,enumitem,empheq,verbatim,csvsimple}
+
+\author{Krystian Baran 145000}
+\title{Zadania z wykładu 9}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% Zadanie 1
+\section{Zadanie 1 (TG 6.32)}
+Zbadano wzrost 13 mężczyzn oraz 12 kobiet w pewnym ośrodku sportowym. Dane: \\
+M: 171, 176, 179, 189, 176, 182, 173, 179, 184, 186, 189, 167, 177, \\
+K: 161, 162, 163, 162, 166, 164, 168, 165, 168, 157, 161, 172. \\
+Zakładając, że w obu populacjach rozkład wzrostu jest normalny, czy można powiedzieć, że mężczyźni charakteryzują się większą zmiennością wzrostu? Przyjąć poziom istotności 0,1. \\ \par
+
+Wyznaczono na początku średnią i wariancję nieobciążoną z podanych prób zgodnie ze wzorami poniżej:
+\begin{align*}
+\overline{X} & = \frac{\sum x_i}{n} \\
+S^2 &= \frac{\sum (x_i - \overline{X})^2 }{n-1}
+\end{align*}
+
+Otrzymano następujące wartości:
+\begin{center} \begin{tabular}{|c|c|c|c|} \hline
+ & $\overline{X}$ & $S^2$ & n \\ \hline
+M & 179.076923 & 45.74359 & 13\\ \hline
+K & 164.083333 & 16.083333 & 12\\ \hline
+\end{tabular} \end{center}
+
+Pytanie czy mężczyźni charakteryzują się większą zmiennością wzrostu można przedstawić jako hipotezę alternatywną wraz z hipotezą zerową następująco:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $\sigma^2_M \leq \sigma^2_K$ \\ \hline
+$H_1$ & $\sigma^2_M > \sigma^2_K$ \\ \hline
+\end{tabular} \end{center}
+Ponieważ zakładamy że rozkłady są typu normalnego możemy zastosować test F Snedecora. Poziom istotności $\alpha = 0.1$.
+
+\[ F = \frac{max\{S_M^2, S_K^2\}}{min\{S_M^2, S_K^2\}} = \frac{45.74359}{16.083333} \approx 2.844161 = F_0 \]
+
+Statystyka ta ma rozkład statystki F Snedeora ze stopniami swobody licznika i mianownika odjąć jeden. W tym przypadku:
+\[ F(13-1, 12-1) = F(12,11) \]
+
+Obliczymy teraz \textit{p value} zgodnie ze wzorem:
+\[ \text{p-value} = 1 - F_{F(12,11)}(F_0) \overset{R}{=} 1 - pf(2.844161, 12, 11) \approx 0.04689163 \]
+Ponieważ \textit{p-value} jest mniejsze od przyjętego poziomu istotności odrzucamy hipotezę zerową i wnioskujemy że wariancją wzrostu mężczyzn jest znacznie większa niż wariancja wzrostu kobiet.
+
+\newpage
+% Zadanie 2
+\section{Zadanie 2}
+Spośród absolwentów pewnej uczelni wylosowano 15 osób z jednego wydziału oraz 12 osób z drugiego wydziału i obliczono średnią ocen ze studiów dla każdego absolwenta. Otrzymano następujące wyniki \\
+dla pierwszego wydziału: 3.71, 4.28, 2.95, 3.20, 3.38, 4.05, 4.07, 4.98, 3.20, 3.43, 3.09, 4.50, 3.12, 3.68, 3.90, \\
+dla drugiego wydziału: 3.10, 3.38, 4.06, 3.60, 3.81, 4.50, 4.00, 3.25, 4.11, 4.85, 2.80, 4.00. \\
+Na poziomie istotności $\alpha=0,05$ zweryfikować następujące hipotezy:
+\begin{enumerate}[label = \alph*)]
+\item wariancje średnich ocen dla obydwu wydziałów są równe,
+\item różnica wartości oczekiwanych ocen uzyskiwanych przez studentów obydwu wydziałów wynosi 0.
+\end{enumerate}
+
+Wyznaczono na początku średnią i wariancję nieobciążoną z podanych prób zgodnie ze wzorami poniżej:
+\begin{align*}
+\overline{X} & = \frac{\sum x_i}{n} \\
+S^2 &= \frac{\sum (x_i - \overline{X})^2 }{n-1}
+\end{align*}
+
+Otrzymano następujące wartości:
+\begin{center} \begin{tabular}{|c|c|c|c|} \hline
+ & $\overline{X}$ & $S^2$ & n \\ \hline
+W1 & 3.702667 & 0.347207 & 15\\ \hline
+W2 & 3.788333 & 0.349415 & 12\\ \hline
+\end{tabular} \end{center}
+
+\subsection{a)}
+Hipoteza że wariancję są sobie równe jest hipotezą zerową, zatem można wyznaczyć hipotezę alternatywną następująco:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $\sigma^2_{W1} = \sigma^2_{W2}$ \\ \hline
+$H_1$ & $\sigma^2_{W1} \neq \sigma^2_{W2}$ \\ \hline
+\end{tabular} \end{center}
+
+Do oceny wariancji zastosujemy test F Snedecora wyrażony następująco:
+\[ F = \frac{max\{S_{W1}^2, S_{W2}^2\}}{min\{S_{W1}^2, S_{W2}^2\}} = \frac{0.349415}{0.347207} \approx 1.006359 = F_0 \]
+Gdzie statystyka F ma rozkład statystyki F Snedecora ze stopniami swobody licznika i mianownika obniżone o jeden, czyli:
+\[ F(12-1, 15-1) = F(11,14) \]
+
+Obliczymy teraz \textit{p-value} zgodnie ze wzorem:
+\begin{align*}
+\text{p-value} & = 2 \cdot min\{ F_{F(11,14)}(F_0), 1 - F_{F(11,14)}(F_0) \} \\
+& \begin{array}{|c|}
+\hline
+F_{F(11,14)}(F_0)  \overset{R}{=} pf(1.006359, 11, 14) \approx 0.513539 \\
+1 - F_{F(11,14)}(F_0) \overset{R}{=} 1 - pf(1.006359, 11, 14) \approx 0.486461 \\ \hline
+\end{array} \\
+& = 2 \cdot 0.486461 = 0.972922
+\end{align*}
+
+Ponieważ \textit{p-value} jest większe od przyjętego $\alpha = 0.05$ nie możemy odrzucić hipotezę zerową, zatem jest możliwe że wariancje średnich ocen obydwu wydziałów są sobie równe.
+
+\subsection{b)}
+Podana hipoteza jest hipotezą zerową, zatem można wyznaczyć hipotezę alternatywną:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $m_{W1} - m_{W2} = 0$ \\ \hline
+$H_1$ & $m_{W1} - m_{W2} \neq 0$ \\ \hline
+\end{tabular} \end{center}
+
+Ponieważ test przeprowadzony w poprzednim podpunkcie wykazało że wariancje obu populacji są sobie równe, możemy, do tego testu zastosować następującą statystykę:
+\[ t = \frac{(\overline{X}_{W1} - \overline{X}_{W2}) - m_0}{\sqrt{ \frac{(n_{W1} - 1)S_{W1}^2 + (n_{W2} - 1)S_{W2}^2}{n_{W1} + n_{W2} - 2} \frac{n_{W1} + n_{W2}}{n_{W1} \cdot n_{W2}} }} \sim t(n_{W1} + n_{W2} - 2) \]
+
+Wtedy $t_0$ będzie równe:
+\[ t_0 = \frac{3.702667 - 3.788333}{\sqrt{ \frac{14 \cdot 0.347207 + 11 \cdot 0.349415}{25} \frac{27}{15\cdot 12} } } \approx -0.374854 \]
+
+Obliczymy teraz \textit{p-value} zgodnie ze wzorem:
+\begin{align*}
+\text{p-value} & = 2 \cdot min\{ F_{t(25)}(t_0), 1 - F_{t(25)}(t_0) \} \\
+& \begin{array}{|c|}
+\hline
+F_{t(25)}(t_0)  \overset{R}{=} pt(-0.374854, 25) \approx 0.3554651 \\
+1 - F_{t(25)}(t_0) \overset{R}{=} 1 -  pt(-0.374854, 25) \approx  0.6445349\\ \hline
+\end{array} \\
+& = 2 \cdot 0.3554651 = 0.7109302
+\end{align*}
+
+Widzimy że \textit{p-value} jest większe od przyjętego $\alpha = 0.05$, zatem nie możemy odrzucić hipotezę zerową. Możemy powiedzieć że wartości oczekiwane średnich ocen z obu wydziałów są sobie równe.
+
+\newpage
+% Zadanie 3
+\section{Zadanie 3}
+Badano opony samochodowe typu 11.00-20/14PR/ produkowane przez dwóch producentów, które zostały wycofane z eksploatacji. Spośród zbadanych 1582 opon producenta A, 1250 opon wycofano z powodu zużycia bieżnika, a spośród 589 zbadanych opon producenta B, wycofano z powodu tego defektu 421 sztuk. Na poziomie istotności $\alpha=0,01$ zweryfikować hipotezę, że frakcje opon wycofanych z eksploatacji na skutek zużycia się bieżnika są jednakowe dla obydwu producentów. \\ \par
+
+Wyrażona hipoteza jest hipotezą zerową, jako alternatywną wybierzemy że frakcje opon wycofanych z eksploatacji dla producenta A jest większa niż ta z producenta B, czyli:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $p_A - p_B = 0$ \\ \hline
+$H_1$ & $p_A - p_B > 0$ \\ \hline
+\end{tabular} \end{center}
+
+Wyznaczymy wskaźnik struktury dla obu prób dzieląc liczebność wycofanych opon przez całkowitą ich ilość:
+\begin{center} \begin{tabular}{|c|c|c|} \hline
+& $\overline{P}_k$ & n \\ \hline 
+A & 0.790139 & 1582 \\ \hline
+B & 0.714771 & 589 \\ \hline
+\end{tabular} \end{center}
+
+Dla obu prób sprawdzono warunek:
+\[ \overline{p}_k \mp 3 \cdot \sqrt{ \frac{\overline{p}_k(1 - \overline{p}_k)}{n_k} } \]
+\[ A : 0.759425 , 0.820853 \]
+\[ B : 0.658957, 0.770585 \]
+Wszystkie te liczby należą do przedziału $(0,1)$, zatem warunek jest spełniony.
+Ponieważ liczebność obu populacji jest wystarczająco duża można zastosować następującą statystykę:
+\[ Z = \frac{\overline{P}_A - \overline{P}_B}{ \sqrt{\overline{P}(1 - \overline{P}) \big( \frac{1}{n_A} + \frac{1}{n_B} \big)} } \]
+Gdzie $\overline{P}$ jest iloczynem sumy wyróżnionych elementów oby prób przez sumę całkowitych elementów oby prób:
+\[ \overline{P} = \frac{k_A + k_B}{n_A + n_B} = \frac{1671}{2171} \approx 0.769691 \]
+
+Statystyka ta ma rozkład statystki $\sim N(0,1)$. Obliczymy teraz $Z_0$ podstawiając znane wartości:
+\[ Z_0 = \frac{0.790139 - 0.714771}{ \sqrt{ 0.769691 (1 -  0.769691 ) (\frac{1}{1582} + \frac{1}{589}) } } \approx 3.708551 \]
+
+Obliczymy teraz \textit{p-value} zgodnie ze wzorem:
+\[ \text{p-value} = 1 - \Phi(3.708551) \overset{R}{=} 1 - pnorm(3.708551, 0, 1) \approx 0.0001042243 \]
+
+Liczba ta jest zdecydowanie mniejsza niż przyjęty $\alpha = 0.01$, zatem odrzucamy hipotezę zerową i wnioskujemy że frakcja opon wycofanych z eksploatacji na skutek zużycie się biernika producenta A jest większa niż ta producenta B.
+
+\newpage
+% Zadanie 6
+\section{Zadanie 6}
+W badaniu granicy plastyczności pewnego gatunku stali otrzymano następujące wyniki dla 15 kawałków tej stali \\
+(wyniki w $kg/{cm}^2$): 3520, 3680, 3640, 3840, 3500, 3610, 3720, 3640, 3600, 3650, 3750, 3590, 3600, 3550, 3700. \\
+Natomiast po dodatkowym procesie uszlachetniającym, mającym zwiększyć wytrzymałość tej stali, otrzymano dla tych samych próbek odpowiednio następujące wyniki badania granicy plastyczności:\\
+3580, 3700, 3680, 3800, 3550, 3700, 3730, 3720, 3670, 3710, 3810, 3660, 3700, 3640, 3670. \\
+Na poziomie istotności $\alpha=0,05$ sprawdzić, czy granica plastyczności stali po dodatkowym procesie uszlachetniającym zwiększyła się. \\ \par
+
+Niech wyniki przed procesem będą $X_1$ a wyniki po procesie będą $X2$. Zbadamy $X_1-X_2$, obliczymy średnią i wariancję zgodnie ze wzorami podanymi w poprzednich zadaniach.
+\begin{center} \begin{tabular}{|c|c|} \hline
+Lp & $X_1-X_2$ \\ \hline
+1 & -60 \\ \hline
+2 & -20 \\ \hline
+3 & -40 \\ \hline
+4 & 40 \\ \hline
+5 & -50 \\ \hline
+6 & -90 \\ \hline
+7 & -10 \\ \hline
+8 & -80 \\ \hline
+9 & -70 \\ \hline
+10 & -60 \\ \hline
+11  & -60 \\ \hline
+12 & -70 \\ \hline
+13 & -100 \\ \hline
+14 & -90 \\ \hline
+15 & 30 \\ \hline
+SUM & -730 \\ \hline
+$\overline{X_1-X_2}$ & -48.666667 \\ \hline
+$S^2$ & 1769.52381\\ \hline
+$S$ & 42.065708 \\ \hline
+\end{tabular} \end{center}
+
+Przedstawioną hipotezę można wyrazić następująco wraz z hipotezą zerową:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $m_{X_1} - m_{X_2} \geq 0$ \\ \hline
+$H_1$ & $m_{X_1} - m_{X_2} < 0$ \\ \hline
+\end{tabular} \end{center}
+
+Zakładając że wyniki te mają rozkład normalny można zastosować następującą statystykę dla rozkładów sparowanych:
+\[ t = \frac{\overline{X_1-X_2} - m_0}{ \frac{S_{\overline{X_1-X_2}} }{\sqrt{n} } } = \frac{-48.666667}{ \frac{42.065708}{\sqrt{15}} } \approx -4.480733 = t_0\]
+
+Statystyka ta ma rozkład statystyki $\sim t(n-1) = t(14)$. Obliczymy teraz \textit{p-value} zgodnie ze wzorami:
+\[ \text{p-value} = F_{t(14)}(t_0) \overset{R}{=} pt(-4.480733, 14) \approx 0.0002589772 \]
+
+Wartość ta jest mniejsza od przyjętego $\alpha = 0.05$, zatem odrzucamy hipotezę zerową i wnioskujemy że granica plastyczności stali po dodatkowym procesie uszlachetniającym zwiększyła się.
+
+\newpage
+% Zadanie 7
+\section{Zadanie 7}
+Zmierzono czasy (w godzinach) usuwania awarii dla dwóch brygad remontowych. Dla pierwszej otrzymano czasy: 12, 13, 18, 25, 42, 19, 22, 35 a dla drugiej brygady: 23, 30, 27, 17, 21, 33, 31.
+Na poziomie istotności 0,05 zweryfikować hipotezy:
+\begin{enumerate}[label = \alph*)]
+\item przeciętne czasy usuwania awarii dla obydwu brygad są równe,
+\item wariancje czasów usuwania awarii dla obydwu brygad są równe.
+\end{enumerate}
+
+Obliczono średnią i wariancję dla obu brygad i otrzymano następujące wyniki:
+\begin{center} \begin{tabular}{|c|c|c|c|} \hline
+ & $\overline{X}$ & $S^2$ & n \\ \hline
+B1 & 23.25 & 110.214286 & 8\\ \hline
+B2 & 26 & 34.333333 & 7\\ \hline
+\end{tabular} \end{center}
+
+\subsection{a)}
+Hipotezę tą można wyznaczyć wraz z hipotezą alternatywną w następujący sposób:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $m_{B_1} - m_{B_2} = 0$ \\ \hline
+$H_1$ & $m_{B_1} - m_{B_2} \neq 0$ \\ \hline
+\end{tabular} \end{center}
+
+Jeżeli dane mają rozkład normalny możemy zastosować następującą statystykę:
+\[ t = \frac{(\overline{X}_{B_1} - \overline{X}_{B_2}) - m_0}{\sqrt{ \frac{S_{B_1}^2}{n_{B_1}} + \frac{S_{B_2}^2}{n_{B_2}} }} \sim t(v) \]
+Gdzie $v$ jest wyrażony następującym wzorem:
+
+\begin{align*}
+v & = \frac{ \Big( \frac{S_{B_1}^2}{n_{B_1}} + \frac{S_{B_2}^2}{n_{B_2}} \Big)^2 }{\frac{1}{n_{B_1}-1} \Big( \frac{S_{B_1}^2}{n_{B_1}} \Big)^2 + \frac{1}{n_{B_2}-1} \Big( \frac{S_{B_2}^2}{n_{B_2}} \Big)^2 } \\
+& = \frac{ \Big( \frac{110.214286}{8} + \frac{34.333333}{7} \Big)^2 }{\frac{1}{7} \Big( \frac{110.214286}{8} \Big)^2 + \frac{1}{6} \Big( \frac{34.333333}{7} \Big)^2 } \\
+& \approx 11.213324
+\end{align*}
+
+Obliczymy wartość $t_0$ podstawiając znane wartości:
+\[ t_0 = \frac{23.25 - 26}{\sqrt{ \frac{110.214286}{8}} + \frac{34.333333}{7}}  \approx -0.636248 \]
+
+Wyznaczymy teraz \textit{p-value} zgodnie ze wzorem:
+\begin{align*}
+\text{p-value} & = 2 \cdot min\{ F_{t(11.213324)}(t_0), 1 - F_{t(11.213324)}(t_0) \} \\
+& \begin{array}{|c|}
+\hline
+F_{t(11.213324)}(t_0)  \overset{R}{=} pt(-0.636248, 11.213324) \approx 0.2686926 \\
+1 - F_{t(11.213324)}(t_0) \overset{R}{=} 1 -  pt(-0.636248, 11.213324) \approx  0.7313074\\ \hline
+\end{array} \\
+& = 2 \cdot 0.2686926 = 0.5373852
+\end{align*}
+
+Wartość ta jest większa niż przyjęty $\alpha = 0.05$ zatem nie możemy odrzucić hipotezę zerową. Wnioskujemy że przeciętne czasy usuwania awarii dla obydwu brygad są równe.
+
+\subsection{b)}
+Hipotezę tą można wyznaczyć w następujący sposób wraz z hipotezą alternatywną:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $\sigma^2_{B_1} = \sigma^2_{B_2}$ \\ \hline
+$H_1$ & $\sigma^2_{B_1} \neq \sigma^2_{B_2}$ \\ \hline
+\end{tabular} \end{center}
+
+Ponieważ badana jest wariancja zastosujemy statystykę F Snedecora wyrażona następująco:
+\[ F = \frac{max\{S_{B_1}^2, S_{B_2}^2\}}{min\{S_{B_1}^2, S_{B_2}^2\}} = \frac{110.214286}{34.333333} \approx 3.210125 = F_0 \]
+Gdzie statystyka F ma rozkład statystyki F Snedecora ze stopniami swobody licznika i mianownika obniżone o jeden, czyli:
+\[ F(8-1, 7-1) = F(7,6) \]
+
+Obliczymy teraz \textit{p-value} zgodnie ze wzorem:
+\begin{align*}
+\text{p-value} & = 2 \cdot min\{ F_{F(7,6)}(F_0), 1 - F_{F(7,6)}(F_0) \} \\
+& \begin{array}{|c|}
+\hline
+F_{F(7,6)}(F_0)  \overset{R}{=} pf(3.210125, 7, 6) \approx 0.9117178 \\
+1 - F_{F(7,6)}(F_0) \overset{R}{=} 1 -  pf(3.210125, 7, 6) \approx  0.08828215\\ \hline
+\end{array} \\
+& = 2 \cdot 0.08828215 = 0.1765643
+\end{align*}
+
+Liczba ta jest większa od przyjętego $\alpha = 0.05$ zatem nie możemy odrzucić hipotezę zerową. Wnioskujemy że wariancje czasów usuwania awarii dla obydwu brygad są sobie równe.
+
+\begin{comment}
+\newpage
+% Zadanie 5
+\section{Zadanie 5}
+Na podstawie danych zawartych w pliku CARDATA postawić i zweryfikować hipotezy dotyczące:
+\begin{enumerate}[label = \alph*)]
+\item wartości oczekiwanych oraz wariancji zużycia paliwa na 100 km dla populacji wszystkich samochodów oraz populacji samochodów europejskich, amerykańskich i japońskich.
+\item Różnic wartości oczekiwanych zużycia paliwa na 100 km samochodów europejskich, amerykańskich i japońskich.
+\item Ilorazów wariancji zużycia paliwa samochodów europejskich, amerykańskich i japońskich.
+\item Wskaźnika oraz różnic wskaźników samochodów europejskich, amerykańskich i japońskich, które zużywają więcej paliwa niż estymowana średnia światowa plus 1,5 estymowanego odchylenia standardowego.
+\end{enumerate}
+
+
+\newpage
+% Zadanie 9
+\section{Zadanie 9}
+Wygenerować próby o liczebnościach 80 i 60 według rozkładów N(900;50) i N(1000;60) i na ich podstawie przeprowadzić test, że wartości oczekiwane różnią się o 50. \\ \par
+
+Przyjmijmy $\alpha = 0.05$. Podaną hipotezę można przedstawić następująco wraz z hipotezą zerową:
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $m_1 - m_2 = 50$ \\ \hline
+$H_1$ & $m_1 - m_2 \neq 50$ \\ \hline
+\end{tabular} \end{center}
+Gdzie $m_1$ jest nieznaną wartością oczekiwaną z próby $N(900;50)$ a $m_2$ jest nieznaną wartością oczekiwaną z próby  $N(1000;60)$. Tabele wygenerowanej próby znajdują się na końcu pliku. \\
+Wariancję i średnią z wygenerowanej próby obliczono w R za pomocą funkcji \textit{mean()} dla średniej, i \textit{var()} dla wariancji nie  obciążonej. Utrzymano następujące wyniki:
+\begin{center} \begin{tabular}{|c|c|c|} \hline
+& N1 & N2 \\ \hline
+$\overline{X}$ & 899.4644 & 978.8235 \\ \hline
+$S^2$ & 2094.456 & 3204.845 \\ \hline
+\end{tabular} \end{center}
+
+Zakładając znane są wariancję z populacji możemy zastosować następującą statystykę:
+\[Z = \frac{(\overline{X}_1 - \overline{X}_2) - m_0}{\sqrt{ \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2} }} = \frac{899.4644 - 978.8235 - 50}{\sqrt{\frac{50}{80} + \frac{60}{60} }} \approx -101.477627 = Z_0\]
+
+Wyznaczymy teraz przedział krytyczny wiedząc że statystyka ta ma w przybliżeniu rozkład statystyki $N(0,1)$:
+\[ z_{\frac{\alpha}{2}} \overset{R}{=} qnorm(0.25, 0, 1) \approx -0.6744898 \]
+\[ z_{1 - \frac{\alpha}{2}} \overset{R}{=} qnorm(0.75, 0, 1) \approx 0.6744898 \]
+\[ R = (-\infty, -0.6744898) \cup (0.6744898, \infty) \]
+
+Wyznaczona wartość $Z_0$ znajduję się w obszarze krytycznym, zatem odrzucamy hipotezę zerową i wnioskujemy że wartości oczekiwane różnią się o 50.
+
+\newpage
+% dane
+\section{Dane}
+\begin{center}
+\tiny
+\csvreader[tabular = |c|c|,
+table head = \hline \bfseries{Lp} & \bfseries{N1} \\ \hline,
+late after last line = \\ \hline]{W9zad9.csv}{}{\csvlinetotablerow}
+\end{center}
+
+\newpage
+\begin{center}
+\tiny
+\csvreader[tabular = |c|c|,
+table head = \hline \bfseries{Lp} & \bfseries{N2} \\ \hline,
+late after last line = \\ \hline]{W9zad9_1.csv}{}{\csvlinetotablerow}
+\end{center}
+\end{comment}
+
+\end{document}

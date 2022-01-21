@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,pdfpages,enumitem,empheq,verbatim}
+
+\author{Krystian Baran 145000}
+\title{Laboratoria zestaw 4}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\section*{Zadanie 4}
+Niech $X_1, \dots , X_n$ będzie próbą prostą z populacji, w której
+cecha $X$ ma rozkład o gęstości
+\[
+f(x) = \frac{x}{8} \textbf{1}_{(0,4)}(x)
+\]
+\begin{enumerate}[label = \alph*)]
+\item Wyznaczyć dystrybuantę i gęstość statystyk\\ $Y = max\{X_1,\dots, X_n\}$, $Z = min\{ X_1,\dots ,X_n \}$.
+\item Obliczyć prawd. zdarzeń $Y<3$, $X>1$.
+\item Obliczyć wartości oczekiwane i wariancje $Y$ i $Z$.
+\end{enumerate}
+
+\subsection*{a)}
+Załóżmy że $X_1,\dots,X_n$ są niezależne. Jeżeli maksymalna z wybranych liczb musi być mniejsza od pewnej liczby, to każda inna od maksymalnej też musi być od niej mniejsza. Wtedy dystrybuantę $F_Y$ można wyznaczyć następująco:
+\[
+F_Y(t) = P(Y\leq t) = \prod_{i=1}^{n} P(X_i \leq t) = P(X_i \leq t)^n
+\]
+Dla $t \in (0,4)$:
+\begin{align*}
+P(X_i \leq t) & = \int_{-\infty}^{t} \frac{x}{8} \textbf{1}_{(0,4)}(x) dx \\
+& = \int_{0}^{t} \frac{x}{8} dx = \frac{x^2}{16} \Big\vert_{0}^{t} \\
+& = \frac{t^2}{16}
+\end{align*}
+
+Zatem dystrybuanta przyjmuje następujący rozkład:
+\[
+F_Y(t) = \left\{
+\begin{array}{ll}
+0 &, t \leq 0 \\
+\Big( \frac{t^2}{16} \Big)^n &, 0<t<4 \\
+1 &, t \geq 4
+\end{array}
+\right.
+\]
+
+Korzystając z wiedzy, że funkcja gęstości to pochodna dystrybuanty, można ją wyznaczyć:
+\[
+f_Y(x) = \frac{F_Y(x)}{dx}
+\]
+
+\[
+f_Y(x) = \left\{
+\begin{array}{ll}
+0 &, x \leq 0 \\
+n \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} &, 0<x<4 \\
+0 &, x \geq 4
+\end{array}
+\right.
+\]
+
+Dla $Z$ natomiast, jeżeli minimalna liczba musi być większa od danej liczby, to każda inna od minimalnej też musi być od niej większa. Zatem można wyznaczyć dystrybuantę:
+
+\[
+F_Z(t) = P(Z \leq t) = 1 - P(Z > t) = 1 - \prod_{i=1}^{n} P(X_i > t) = 1 - ( 1 - P(X_i \leq t) )^n
+\]
+
+Więc, korzystając z poprzedniej wyliczonej całki, dystrybuanta przyjmuje następujący rozkład:
+\[
+F_Z(t) = \left\{
+\begin{array}{ll}
+0 &, t \leq 0 \\
+1 - \Big(1 - \frac{t^2}{16} \Big)^n &, 0<t<4 \\
+1 &, t \geq 4
+\end{array}
+\right.
+\]
+
+Funkcja gęstości będzie miała natomiast taki rozkład:
+
+\[
+f_Z(x) = \left\{
+\begin{array}{ll}
+0 &, x \leq 0 \\
+n \Big(1 - \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} &, 0<x<4 \\
+0 &, x \geq 4
+\end{array}
+\right.
+\]
+
+\subsection*{b)}
+Ponieważ wyliczona została już dystrybuanta dla $Y$ i dla $Z$, to można łatwo obliczyć szukane prawdopodobieństwa:
+
+\[
+P(Y<3) = F_Y(3) = \Big( \frac{9}{16} \Big)^n
+\]
+
+Jeżeli $n \rightarrow \infty$ to $P(Y<3) \rightarrow 0$ oznacza to, że wartość maksymalna całkowita jest większa od 3\\
+
+\begin{align*}
+P(Z>1) & = 1 - P(Z<1) = 1 - F_Z(1) = 1 - \Big( 1 - \Big( 1 - \frac{1}{16} \Big)^n \Big)  \\
+& = \Big( \frac{15}{16} \Big)^n
+\end{align*}
+
+Jeżeli $n \rightarrow \infty$ to $P(Z>1) \rightarrow 0$ oznacza to, że wartość minimalna całkowita jest mniejsza od 1.
+
+\subsection*{c)}
+Zaczniemy od obliczenia wartości oczekiwanej $Y$.
+
+\begin{align*}
+\mathbb{E}Y & = \int_{\mathbb{R}}^{} n\cdot x \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} \textbf{1}_{(0,4)}(x) dx \\
+& = \int_{0}^{4} n\cdot x \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} dx \\
+& = \frac{n}{16^{n-1}8} \int_{0}^{4} x^{2n} dx \\
+& =  \frac{n}{16^{n-1}8} \Big[ \frac{x^{2n+1}}{2n+1} \Big\vert_0^4 \\
+& = \frac{n \cdot 4^{2n+1}}{4^{2n-2} \cdot 8(2n+1)} = \frac{8n}{2n+1}
+\end{align*}
+
+Jeżeli $n \rightarrow \infty$, to $ \mathbb{E}Y \rightarrow 4$, zatem wartość maksymalna dąży do granicy przedziału.\\
+Następnie obliczymy wariancję $Y$.
+
+\begin{align*}
+\mathbb{E}(Y^2) & = \int_{\mathbb{R}}^{} n\cdot x^2 \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} \textbf{1}_{(0,4)}(x) dx \\
+& = \int_{0}^{4} n\cdot x^2 \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} dx \\
+&\begin{array}{c|c|c}
+\hline
+& D & I \\
++ & x^2 & n\cdot \Big( \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} \\
+- & 2x & \Big( \frac{x^2}{16} \Big)^n \\
+\hline
+\end{array} \\
+& = x^2 \Big( \frac{x^2}{16} \Big)^n - \int_{0}^{4} 2x \Big( \frac{x^2}{16} \Big)^n dx \\
+& = \Big[ x^2 \Big( \frac{x^2}{16} \Big)^n - \frac{16}{n+1} \Big( \frac{x^2}{16} \Big)^{n+1} \Big\vert_0^4 \\
+& = 16 \Big( \frac{16}{16} \Big)^n - \frac{16}{n+1} \Big( \frac{16}{16} \Big)^{n+1} \\
+& = \frac{16(n+1) - 16}{n+1} = \frac{16}{n+1}
+\end{align*}
+
+\[
+\mathbb{D}^2(Y) = \mathbb{E}(Y^2) - \mathbb{E}Y^2 = \frac{16}{n+1} - \frac{64n^2}{(2n+1)^2}
+\]
+
+%oczekiwana z
+Obliczymy teraz wartość oczekiwaną $Z$.
+\begin{align*}
+\mathbb{E}Z & = \int_{\mathbb{R}}^{} n\cdot x \Big(1 - \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} \textbf{1}_{(0,4)}(x) dx \\
+& = \int_{0}^{4} n\cdot x \Big(1 - \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} dx 
+\end{align*}
+
+Jest to trudna do obliczenia całka, zatem, na podstawie wartości oczekiwanej jak poprzednio, wnioskujemy że wartość oczekiwana $\mathbb{E}Z$ będzie dążyć do 0 dla n dążącego do nieskończoności. \\
+Ponieważ nie obliczyliśmy wartość oczekiwanej nie możemy obliczyć wariancję.
+
+\begin{comment}
+&\begin{array}{c|c|c}
+\hline
+& D & I \\
++ & x & n\cdot \Big(1 - \frac{x^2}{16} \Big)^{n-1} \frac{x}{8} \\
+- & 1 & - \Big(1 - \frac{x^2}{16} \Big)^n \\
+\hline
+\end{array} \\
+& = - x \cdot \Big(1 - \frac{t^2}{16} \Big)^n + \int_{0}^{4}\Big(1 - \frac{x^2}{16} \Big)^n dx 
+\end{comment}
+
+\end{document}

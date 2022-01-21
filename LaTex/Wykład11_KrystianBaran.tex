@@ -1,0 +1,176 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,pdfpages,enumitem,empheq,verbatim,csvsimple}
+\usepackage{multirow}
+
+\author{Krystian Baran 145000}
+\title{Zadania z wykładu 11}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+% Zadanie 1
+\section{Zadanie 1}
+
+Sporządzić diagram rozrzutu, wyznaczyć oceny współczynników korelacji i determinacji, wyznaczyć równania prostych regresji ($Y$ względem $X$, $X$ względem $Y$), błędy standardowe estymacji oraz wykreślić równanie regresji dla podanych prób:
+
+\begin{enumerate}[label = \alph*)]
+
+\item $[x; y] = $\\
+$\{[5.5, 1.5], [8.5, 4.0], [4.0, 2.0], [8.0, 7.5], [2.5, 0.5], [8.0, 5.0], [8.5, 8.5], [3.5, 1.0], $\\
+$[6.5, 2.5], [9.0, 8.0], [0.5, 1.0], [8.5, 6.5], [7.5, 3.5], [1.5, 1.0], [8.5, 9.5], $\\
+$[2.0, 1.5], [8.0, 9.0], [7.5, 5.5], [9.0, 5.5], [7.0, 1.5], [7.5, 7.0], [5.0, 0.5], $\\
+$[4.5, 1.5], [5.5, 2.5], [6.5, 4.0]\}$.
+
+\item $[x; y] = $\\
+$\{[3.4, 3.7], [2.7, 4.7], [4.4, 4.6], [2.6, 2.5], [5.2, 5.3], [3.1, 4.6], [2.2, 3.5], [3.3, 4.1], $\\
+$[6.0, 5.3], [4.0, 5.4], [2.0, 2.7], [3.9, 5.0], [2.5, 1.5], [2.5, 4.3], [3.6, 3.0], [6.4, 5.1], $\\
+$[2.8, 3.7], [4.3, 5.8], [5.7, 5.5], [2.5, 3.2], [4.9, 5.0], [3.0, 1.8], [3.6, 4.3], [5.7,4.9], $\\
+$[3.0, 1.0], [4.1, 4.1], [5.0, 4.8], [2.2, 2.0], [3.7, 3.4], [5.0, 5.7], [3.1, 4.4], [3.4,5.4], $\\
+$[3.4, 2.3], [2.5, 2.9], [5.3, 5.0], [4.1,4.6], [3.0, 5.0], [2.8, 2.3], [3.0, 3.9], [2.4, 3.9], $\\
+$[4.5, 5.5], [3.5, 5.0], [4.8, 5.3], [3.1, 2.5], [2.7, 4.1], [3.0, 3.3], [4.2, 5.0], [3.3, 2.2], $\\
+$[3.6, 3.9], [3.4, 4.7]\}$.
+\end{enumerate}
+
+\subsection{Diagram rozrzutu}
+Jako pierwsze sporządzono diagram rozrzutu gdzie na osi X są wartości $x$, a na osi Y wartości $y$. Wykres sporządzono w R.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[height = 0.4\textheight, angle = 0]{"w11zad1a.png"}
+\end{center} \end{figure} 
+
+\newpage
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[height = 0.4\textheight, angle = 0]{"w11zad1b.png"}
+\end{center} \end{figure} 
+
+\subsection{Współczynnik korelacji}
+Obliczymy teraz współczynnik korelacji zgodnie ze wzorem:
+\[ r = \frac{SS_{xy}}{\sqrt{SS_{xx} \cdot SS_{yy}}} \]
+Gdzie:
+\[ SS_{xx} = \sum (x_i^2) - \frac{(\sum x_i )^2}{n} \overset{R}{=} sum(x^2) - sum(x)^2/length(x) \]
+\[ SS_{xy} = \sum x_i y_i - \frac{\sum x_i \cdot \sum y_i}{n} \overset{R}{=} sum(x*y) - sum(x)*sum(y)/length(x) \]
+
+Otrzymano następujące wartości:
+\begin{center} \begin{tabular}{|c|c|c|c|c|} \hline
+ & $SS_{xx}$ & $SS_{yy}$ & $SS_{xy}$ & r \\ \hline
+a) & 155.64 & 209.74 & 142.44 & 0.7883711 \\ \hline
+b) & 57.4248 & 74.1122 & 42.3684 & 0.6494526 \\ \hline
+\end{tabular} \end{center}
+
+Ponieważ oba $r$ są dodatnie możemy sformułować hipotezę że współczynnik korelacji pomiędzy $x$ i $y$ jest dodatni.
+\begin{center} \begin{tabular}{|c|c|} \hline
+$H_0$ & $\rho \leq 0$ \\ \hline
+$H_1$ & $\rho > 0$ \\ \hline
+\end{tabular} \end{center}
+
+Aby sprawdzić tę hipotezę zastosujemy następującą statystykę:
+\[ Z = (U - u_0) \cdot \sqrt{n-3} \]
+Która, dla $n > 7$ ma w przybliżeniu standardowy rozkład normalny. Poniżej przedstawiono obliczenia dla: \\ \par
+a)
+\[U = \frac{1}{2} \ln \frac{1+r}{1-r} = \frac{1}{2} \ln(\frac{1.7883711}{0.2116289} \approx 1.067113 \]
+\[ u_0 = \frac{1}{2} \ln \frac{1+\rho_0}{1-\rho_0} + \frac{\rho_0}{2n-2} = 0 \]
+\[ Z_0 = 2.51587 \cdot \sqrt{10 -3} \approx 5.005205 \]
+
+b)
+\[U = \frac{1}{2} \ln \frac{1+r}{1-r} = \frac{1}{2} \ln(\frac{1.6494526}{0.3505474} \approx 0.7743514 \]
+\[ u_0 = \frac{1}{2} \ln \frac{1+\rho_0}{1-\rho_0} + \frac{\rho_0}{2n-2} = 0 \]
+\[ Z_0 = 2.51587 \cdot \sqrt{10 -3} \approx 5.308686 \]
+
+Wtedy można obliczyć \textit{p-value} dla oby prób, zgodnie ze wzorem:
+\begin{align*} \text{p-value}_a & = 1 - \Phi(5.005205) \overset{R}{=} 1 - pnorm(5.005205, 0, 1) \approx 2.790134e-07 \\
+\text{p-value}_b & = 1 - \Phi(5.308686) \overset{R}{=} 1 - pnorm(5.308686, 0, 1) \approx 5.520921e-08 \end{align*}
+
+Przyjmując $\alpha = 0.05$ oba \textit{p-value} są mniejsze od $\alpha$; zatem odrzucamy hipotezę zerową i wnioskujemy że korelacja pomiędzy $x$ i $y$ jest typu dodatniego, co widać na wykresach i z obliczonych wartości $r$. \\ \par
+
+\subsection{Współczynnik determinacji i równania regresji}
+Aby wyznaczyć współczynnik determinacji potrzebne jest wyliczenie SSE, które wyraża się następująco:
+\[ \text{SSE} = \sum (y_i - \text{\^y}_i)^2 \]
+lub
+\[ \text{SSE} = \sum (x_i - \text{\^x}_i)^2 \]
+
+Zatem potrzebujemy najpierw wyznaczyć równanie regresji. Do tego równania potrzebujemy dwa współczynniki:
+\[ \beta_0 = \overline{y} - \beta_1 \overline{x} \overset{R}{=} mean(y) - b1*mean(x) \]
+\[ \beta_1 = \frac{SS_{xy}}{SS_{xx}} = b1\]
+Natomiast dla $X$ zależne od $Y$ parametry są następujące:
+\[ \beta_0 = \overline{x} - \beta_1 \overline{y} \overset{R}{=} mean(x) - b1*mean(y) \]
+\[ \beta_1 = \frac{SS_{xy}}{SS_{yy}} = b1\]
+
+Rozważymy najpierw $Y$ zależne od $X$. Równania wyglądają następująco:
+\begin{align*}
+y & = \beta_0 + \beta_1 \cdot x \\
+y_a & = -1.580956  +  0.9151889 \cdot x \\
+y_b & = 1.342481  +  0.7378067 \cdot x
+\end{align*}
+
+Wtedy parametry SSE wynoszą:
+\begin{center} \begin{tabular}{|c|c|} \hline
+& SSE \\ \hline
+a) & 79.38049 \\ \hline
+b) & 42.85251 \\ \hline
+\end{tabular} \end{center}
+
+Możemy teraz wyznaczyć współczynnik determinacji, który wynosi:
+\[ r^2 = 1 + \frac{SSE}{SS_{yy}} \]
+\begin{center} \begin{tabular}{|c|c|} \hline
+& $r^2$ \\ \hline
+a) & 0.6215291 \\ \hline
+b) & 0.4217887 \\ \hline
+\end{tabular} \end{center}
+
+Następnie rozważymy dla $X$ zależnego od $Y$. Wtedy, analogicznie do wcześniej:
+\begin{align*}
+x & = \beta_0 + \beta_1 \cdot y \\
+x_a & = 3.389911  +  0.6791265 \cdot y \\
+x_b & = 1.341846  +  0.5716792 \cdot y
+\end{align*}
+
+Wtedy parametry SSE wynoszą:
+\begin{center} \begin{tabular}{|c|c|} \hline
+& SSE \\ \hline
+a) & 58.90522 \\ \hline
+b) & 33.20367 \\ \hline
+\end{tabular} \end{center}
+
+Możemy teraz wyznaczyć współczynnik determinacji, który wynosi:
+\[ r^2 = 1 + \frac{SSE}{SS_{yy}} \]
+\begin{center} \begin{tabular}{|c|c|} \hline
+& $r^2$ \\ \hline
+a) & 0.6215291 \\ \hline
+b) & 0.4217887 \\ \hline
+\end{tabular} \end{center}
+
+Wartości $r^2$ nie zmieniają się, zatem, równanie regresji zmniejsza całkowitą sumę kwadratów o 62\% dla próby a) i 42\% dla próby b) od średniej arytmetycznej.
+
+\subsection{Błąd modelu}
+Następnie obliczymy błędy modelu zgodnie ze wzorem:
+\[ S^2 = \frac{SSE}{n-2} \]
+Liczebności prób są, dla a) $n = 25$, dla b) $n = 50$. Wtedy błędy modelu są następujące:
+\begin{center} \begin{tabular}{|c|c|c|} \hline
+& Y od X & X od Y \\ \hline
+a) & 3.451326 & 2.561096 \\ \hline
+b) & 0.8927607 & 0.6917431 \\ \hline
+\end{tabular} \end{center}
+
+\subsection{Wykresy regresji}
+Jako ostatnie przedstawiono wykresy prostych regresji na wykresach z danymi.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[height = 0.5\textheight, angle = 0]{"w11zad1a_r.png"}
+\end{center} \end{figure} 
+
+\newpage
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[height = 0.5\textheight, angle = 0]{"w11zad1b_r.png"}
+\end{center} \end{figure} 
+
+Dla danych a) prosta x(y) lepiej obrazuje przebieg danych, natomiast dla danych b) nie ma znacznej różnicy pomiędzy prostymi.
+
+\end{document}

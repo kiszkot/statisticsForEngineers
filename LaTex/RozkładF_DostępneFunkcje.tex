@@ -1,0 +1,229 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath,amssymb,graphicx,subfig,enumitem,empheq,verbatim}
+
+\author{Krystian Baran 145000}
+\title{Rozkład F dostępne funkcje}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Definicja i podstawowe wzory (bez dowodu)}
+Rozkład F jest rozkładem zmiennej losowej typu ciągłego często stosowane w analizie wariancji. Jego funkcja gęstości wygląda następująco:
+\[
+f(x|d_1,d_2) = \frac{\sqrt{ \frac{(d_1x)^d_1\cdot d_2^{d_2}}{(d_1x+d_2)^{d_1+d_2} }}}{x B\big( \frac{d_1}{2}, \frac{d_2}{2} \big)} =
+\frac{1}{ B\big( \frac{d_1}{2}, \frac{d_2}{2} \big)} \Big( \frac{d_1}{d_2}\Big)^{\frac{d_1}{2}} x^{\frac{d_1}{2}-1} \Big(1 + \frac{d_1}{d_2}x \Big)^{-\frac{d_1+d_2}{2}}
+\]
+Gdzie $B(a,b)$ to funkcja beta z parametrami $a$ i $b$. Często spotykana jest także wersja bez funkcji Beta korzystając z podobieństwa funkcji Beta z funkcją Gamma, to znaczy:
+\[
+B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}
+\]
+Parametry $d_1$ i $d_2$ są to stopnie swobody, często nazywane stopnie swobody licznika i mianownika odpowiednio, i muszą być większe od 0. Natomiast zmienna $x$ jest wartością większą od 0 dla $d_1 = 1$ lub większą równą 0 dla innych przypadków $d_1$. \\ \par
+Obliczenie dystrybuanty jest trudne bez znania stopni swobody dla tego korzysta się z uregulowanej niepełnej funkcji Beta definiowanej następującym wzorem:
+\[
+I_x(a,b) = \frac{B(x;a,b)}{B(a,b)}
+\]
+Gdzie $B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt$.
+Dystrybuantę rozkładu F zapisuje się zatem w następujący sposób:
+\[
+F_X(x) = I_{\frac{d_1x}{d_1x+d_2}} \Big( \frac{d_1}{2}, \frac{d_2}{2} \Big)
+\]
+
+Wartość oczekiwana wynosi:
+$$\mathbb{E}X = \frac{d_2}{d_1-2}$$ 
+dla wartości $d_2 > 2$. \par
+Wartość modalna wynosi 
+$$\frac{d_1-2}{d_1}\frac{d_2}{d_2+2}$$
+dla wartości $d_1 > 2$. \par
+Wariancja wynosi 
+$$\mathbb{D}^2(X) = \frac{2d_2^2(d_1+d_2-2)}{d_1(d_2-2)^2(d_2-4)}$$
+dla wartości $d_2 > 4$.
+
+\newpage
+\section{R}
+W języku programowania R dostępne są następujące funkcje dla rozkładu F:
+\begin{itemize}
+\item df(x, df1, df2, ncp, log = FALSE)
+\item pf(q, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
+\item qf(p, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
+\item rf(n, df1, df2, ncp)
+\end{itemize}
+Gdzie:
+\begin{itemize}
+\item \textbf{x, q} - wektory kwantyli
+\item \textbf{p} - wektor prawdopodobieństw
+\item \textbf{df1, df2} - stopnie swobody (można skorzystać z $\infty$)
+\item \textbf{ncp} - parametr nie środkowości (gdy nie podany jest to centralny rozkład F)
+\item \textbf{log, log.p} - gdy TRUE wartości brane jako log(p)
+\item \textbf{lower.tail} - jeżeli TRUE liczone $P(X \leq x)$, gdy FALSE $P(X > x)$
+\end{itemize} 
+Funkcja \textit{df} liczy wartość gęstości dla podanego $x$, funkcja \textit{pf} liczy wartość dystrybuanty dla podanego $q$, funkcja \textit{qf} liczy kwantyl dla podanego prawdopodobieństwa i funkcja \textit{rf} generuje próbę $n$ liczb losowych według rozkładu z danymi parametrami $df1$ i $df2$.
+
+\newpage
+\section{MS Excel}
+W programie MS Excel dostępna jest funkcja \textbf{F.DIST}(x, deg\_freedom1, deg\_freedom2, cumulative) która oblicza wartość funkcja gęstości lub dystrybuanty w danym $x$. Parametry podane są następujące:
+\begin{itemize}
+\item \textbf{x} - wartość w którym obliczyć prawdopodobieństwo lub dystrybuantę
+\item \textbf{deg\_freedom1} - stopień swobody nr 1, ten co występuje w liczniku
+\item \textbf{deg\_freedom2} - stopień swobody nr 2, ten co występuje w mianowniku
+\item \textbf{cumulative} - wartość logiczna, FALSE dla gęstości, TRUE dla dystrybuanty
+\end{itemize}
+Parametry $x$ musi być większy od zera a $deg\_freedom1$, $deg\_freedom2$ muszą być większe od 1, inaczej zwracany jest błąd \textbf{\#NUM!}. \\
+Parametry $deg\_freedom1$ i $deg\_freedom2$ powinny być także całkowite, w przeciwnym wypadku są obcinane do liczby całkowitej. \\
+Gdy dowolny parametr podany nie jest liczbą funkcja zwraca błąd \textbf{\#VALUE!}. \\ \par
+Funkcja ta dostępna jest dla następujących wersji MS Excel: \\
+\textit{Excel for Microsoft 365, Excel for Microsoft 365 for Mac, Excel for the web, Excel 2019, Excel 2016, Excel 2019 for Mac, Excel 2013, Excel 2010, Excel 2016 for Mac, Excel for Mac 2011, Excel Web App, Excel Starter 2010}
+
+\newpage
+\section{GNU Octave}
+W GNU Octave dostępne są następujące funkcje dla rozkładu F:
+\begin{itemize}
+\item \textbf{fpdf(x, m, n)} - gęstość rozkładu F
+\item \textbf{fcdf(x, m, n)} - dystrybuanta rozkładu F
+\item \textbf{finv(x, m, n)} - odwrotność dystrybuanty rozkładu F, czyli funkcja kwantylowa
+\end{itemize}
+Gdzie: 
+\begin{itemize}
+\item \textbf{x} - wartość dla której jest obliczana funkcja
+\item \textbf{m} - stopnie swobody w liczniku
+\item \textbf{n} - stopnie swobody w mianowniku
+\end{itemize}
+Funkcje te dostępne są w GNU Octave pod warunkiem że zainstalowany i załadowany został pakiet \textit{statistics} który można łatwo zainstalować.
+
+\newpage
+\section{Matlab}
+W Matlab dostępne są następujące funckje dla rozkładu F:
+\begin{itemize}
+\item \textbf{fpdf} - gęstosć rozkładu F
+\item \textbf{fcdf} - dystrybuanta rozkładu F
+\item \textbf{finv} - funkcja kwantylowa rozkładu F, czyli odwrotnosć dystrybuanty
+\item \textbf{fstat} - funckja obliczająca wartosć oczekiwaną i warincję rozkładu F
+\item \textbf{frnd} - funkcja generująca losowe liczby według rozkładu F
+\end{itemize}
+Do każdej funkcji nalezą co najmniej paramenty \textbf{V1} i \textbf{V2} które są stopnie swobody odpowiednio te w liczniku i te w mianowniku.
+\subsection{fcdf}
+\textit{fcdf(x,v1,v2,'upper')} \\
+Dla każdego elementu tablicy $x$ zwracana jest wartość gęstości w tym punkcje. Parametr \textit{'upper'} jest parametr nie obowiązkowym, służy do obliczenia wartości gęstości algorytmem bardziej dokładnym dla skrajnych wartości gęstości.
+
+\subsection{fpdf}
+\textit{fpdf(X,V1,V2)}\\
+Dla każdego elementu tablicy $x$ zwracana jest wartość dystrybuanty. $V1$ i $V2$ mogą także być tablicami pod warunkiem że mają ten sam wymiar.
+
+\subsection{finv}
+\textit{finv(P,V1,V2)} \\
+Dla każdego elementu tablicy prawdopodobieństw $P$ zwracany jest odpowiadający mu kwantyl. Podobnie jak wcześniej $V1$ i $V2$ mogą być tablicami pod warunkiem że zgadzają się wymiary. Wartości $P$ powinny należeć do przedziału $[0,1]$, w przeciwnym wypadku zwracany jest błąd.
+
+\subsection{fstat}
+\textit{ $[M,V]$ = fstat(V1,V2)} \\
+Dla każdego elementu tablicy $V1$ i $V2$, pod warunkiem że mają one ten sam wymiar (jeżeli liczymy tylko dla jednych wartości stopni swobody będą to tablice jednoelementowe) obliczana jest wartość oczekiwana (M - mean) i wariancja (V - variance) rozkładu F z podanymi stopniami swobody.
+
+\subsection{frnd}
+\textit{R = frnd(V1,V2)} \\
+\textit{R = frnd(V1,V2,m,n,...)}\\
+\textit{R = frnd(V1,V2,$[m,n,...]$)} \\
+Jak poprzednio $V1$ i $V2$ mogą być tablicami. Funkcja zwraca jedną wartość losową według rozkładu F lub tablice $m$ na $n$ wartości losowych według rozkładu F. Wymiary tablicy mogą być podawane osobno lub w wektorze wymiarów, zatem ostatnie dwie funkcje są równoważne.
+
+\newpage
+\section{TI-82 Stats}
+Na kalkulatorze graficznym \textit{Texas Instruments TI-82 Stats} dostępne są dwie funkcje dla rozkładu F.
+\begin{itemize}
+\item \textbf{Fpdf(} - dla gęstości rozkładu F
+\item \textbf{Fcdf(} - dla dystrybuanty rozkładu F
+\end{itemize}
+\subsection{Fpdf(}
+\textit{Fpdf(X, numerator df, denominator df} \\
+Funkcja ta zwraca wartość gęstości dla podanego $X$ i dla podanych stopni swobody \textit{numerator df} w liczniku i \textit{denominator df} w mianowniku. Liczby te muszą być większe od zera inaczej zwracany jest błąd \textbf{DOMAIN}. Możliwe jest narysowanie gęstosci poprez wpisane \textbf{Fpdf(} w polu "\textit{Y =}".
+
+\subsection{Fcdf(}
+\textit{Fcdf(lowerbound, upperbound, numerator df, denominator df)} \\
+Funkcja ta zwraca wartość dystrybuanty pomiędzy punktami \textit{lowerbound} i \textit{upperbound} (tj $P(a<X<b)$). Podane stopnie swobody są jak poprzednio. Aby obliczyć wartość dystrybuant w punkcje zamiast w przedziale wystarczy przyjąć jako \textit{lowerbound} 0 ponieważ rozkład F nie jest zdefiniowany dla wartości mniejszych od 0.
+
+\newpage
+\section{Przykład}
+Przypuscmy że chemy zbadać wpływ napoju na czas pracy księgowych, to znaczy czy typ napoju włpywa na czas pracy księgowego. Księgowi podzielono na try grupy pod innym napojem, Soda, Napój vitaminy-B i kawa. Dla każdedo księgowego zbadano czas pracy gdy każdy księgowy dostał to samo zadanie.\\
+\\
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{Soda} & \multicolumn{2}{|c|}{Napój witaminy-B} & \multicolumn{2}{|c|}{Kawa} \\
+\hline
+Księgowy & Godz. pracy & Księgowy & Godz. pracy & Księgowy & Godz. pracy\\
+\hline
+1 & 8 & 6 & 5 & 11 & 7 \\
+\hline
+2 & 8 & 7 & 6 & 12 & 6 \\
+\hline
+3 & 10 & 8 & 6 & 13 & 7 \\
+\hline
+4 & 7 & 9 & 4 & 14 & 7 \\
+\hline
+5 & 10 & 10 & 8 & 15 & 9 \\
+\hline
+\end{tabular}
+
+Następnie potrzebujemy obliczyć Sumę Kwadratów w grupach (SKG), Sumę kwadratów między grupami (SKMG) i całkowitą sumę kwadratów (CSK).\\
+Sumę kwadratów w każdej grupie jest to suma kwadratów dla poszczególnych grup która wyraża się wzorem: $\sum_{i=1}^n (X-\overline{X})^2$. Zatem musimy dla każdej grupy najpierw wyliczyć wartość średnia. Uzyskane wartości w tabeli poniżej. \\
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{Soda} & \multicolumn{2}{|c|}{Napój witaminy-B} & \multicolumn{2}{|c|}{Kawa} \\
+\hline
+Śr & SK & Śr & SK & Śr & SK \\
+\hline
+8.6 & 7.2 & 5.8 & 8.8 & 7.2 & 4.8\\
+\hline
+\end{tabular}
+\end{center}
+SKG będzie sumą otrzymanych SK, czyli $7.2 + 8.8 + 4.8 = 20.8$. \\ \par
+Następnie obliczymy CSK, czyli wyznaczyliśmy wartość średnia dla całej populacji bez grupowania i skorzystaliśmy z poprzedniego wzoru. Średnia z całej populacji wynosi \textbf{7.2} natomiast CSK wynosi \textbf{40.4}. \\ \par
+
+Aby wyznaczyć SKMG potrzebujemy od średniej każdej grupy odjąć średnią całej populacji, następnie uzyskane wartości podnieść do kwadratu i sumować. Otrzymany wynik pomnożony razy liczebność grupy jest szukane SKMG.
+\begin{itemize}
+\item Grupa 1 = 8.6 - 7.2 = 1.4
+\item Grupa 2 = 5.8 - 7.2 = -1.4
+\item Grupa 3 = 7.2 - 7.2 = 0
+\end{itemize}
+\[
+1.4^2 + (-1.4)^2 + 0^2 = 1.96 + 1.96 = 3.92
+\]
+Zatem szukane SKMG wynosi $3.92 \cdot 5 = 19.6$ \\ \par
+Teraz potrzebujemy obliczyć stopnie swobody dla każdej grupy i między grupowe. Stopnie swobody między grupowe dane są wzorem \textbf{liczba grup - 1} czyli w naszym przypadku wynosi to 2. Stopnie swobody dla każdej grupy wyraża się wzorem \textbf{Liczebność całkowita - liczba grup} czyli w naszym przypadku 12. \\
+Następnie SKG i SKMG dzieli przez odpowiadające im stopnie swobody czyli
+\begin{align*}
+SKG)& \frac{20.8}{12} = 1.73 \\
+SKMG) & \frac{19.6}{2} = 9.8
+\end{align*}
+Wyznaczmy współczynnik F jako iloczyn otrzymanych wartości tak aby największa znajdowała się w liczniku. Tę wartość porównamy z wartością krytyczną którą poniżej obliczymy. \\
+Zakładając że nasz procent pewności jest 95\% nasz level $\alpha$ wynosi 0.05. Aby znaleźć wartość krytyczną potrzebujemy obliczyć kwantyl odpowiadając za level $\alpha$ ale z prawej strony wykresu dla rozkładu F ze stopniami swobody SKMG i SKG. Zatem wartość krytyczna K wynosi:
+\[
+K \overset{R}{=} qf(0.05, 2, 12, lower.tail = FALSE) \approx 3.885294
+\]
+Wartosć F jest większa od wartosci K, oznacza to że nasza teza, mówiąca że typ napoju nie wpływa na czas pracy ksiegowego jest nie prawdziwa. Zatem typ napoju wpływa na czas pracy księgowego.
+
+\newpage
+\section{Bibliografia}
+\begin{itemize}
+\item https://en.wikipedia.org/wiki/F-distribution
+\item https://en.wikipedia.org/wiki/Beta\_function\#Incomplete\_beta\_function
+\item https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/FDist
+\item https://support.microsoft.com/en-us/office/f-dist-function-a887efdc-7c8e-46cb-a74a-f884cd29b25d
+\item https://octave.org/doc/v4.2.0/Distributions.html
+\item https://www.mathworks.com/help/stats/referencelist.html?type=function\&category=f-distribution-1\&s\_tid=CRUX\_topnav
+\item https://www.mathworks.com/help/stats/f-distribution.html
+\item https://www.mathworks.com/help/stats/fcdf.html
+\item https://www.mathworks.com/help/stats/fpdf.html
+\item https://www.mathworks.com/help/stats/finv.html
+\item https://www.mathworks.com/help/stats/fstat.html
+\item TI-82 STATS GRAPHING CALCULATOR GUIDEBOOK - Texas Instruments Incorporated
+\item https://www.whatissixsigma.net/anova-f-test/
+\item https://www.statisticshowto.com/probability-and-statistics/statistics-definitions/p-value/
+\item https://www.statisticshowto.com/probability-and-statistics/statistics-definitions/what-is-an-alpha-level/
+\end{itemize}
+
+\end{document}
