@@ -1,2 +1,8 @@
 # Directory to skip
 Books/
+
+# Files to skip
+*.tex
+*.aux
+*.synctex.gz
+LaTex/*.log
