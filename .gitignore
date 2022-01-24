@@ -5,4 +5,5 @@ Books/
 *.tex
 *.aux
 *.synctex.gz
+*.Rhistory
 LaTex/*.log
